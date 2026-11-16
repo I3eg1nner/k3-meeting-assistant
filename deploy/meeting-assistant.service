@@ -1,0 +1,27 @@
+[Unit]
+Description=K3 Meeting Assistant
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/opt/meeting-assistant
+EnvironmentFile=/etc/meeting-assistant.env
+Environment=PYTHONUNBUFFERED=1
+Environment=HOME=/var/lib/meeting-assistant
+ExecStartPre=/usr/bin/python3 /opt/meeting-assistant/deploy/check-service.py --check-config
+ExecStart=/usr/bin/python3 -m uvicorn meeting_assistant.main:app --app-dir /opt/meeting-assistant/backend --host 0.0.0.0 --port 8000 --workers 1
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=20
+LimitNOFILE=65536
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/var/lib/meeting-assistant
+
+[Install]
+WantedBy=multi-user.target

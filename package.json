@@ -1,0 +1,38 @@
+{
+  "name": "k3-meeting-assistant",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "vite --config vite.k3.config.ts",
+    "build": "npm run build:k3",
+    "dev:k3": "vite --config vite.k3.config.ts",
+    "build:k3": "vite build --config vite.k3.config.ts",
+    "start": "vite preview --config vite.k3.config.ts --host 127.0.0.1",
+    "test": "npm run build:k3 && node --test tests/rendered-html.test.mjs && npm run test:report",
+    "test:report": "node --experimental-strip-types --test tests/report-document.test.mjs",
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next"
+  },
+  "dependencies": {
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "@tiptap/react": "^3.8.0",
+    "@tiptap/starter-kit": "^3.8.0",
+    "wavesurfer.js": "^7.12.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "eslint": "9.39.4",
+    "globals": "^16.5.0",
+    "typescript": "5.9.3",
+    "vite": "8.0.13",
+    "typescript-eslint": "^8.52.0"
+  },
+  "type": "module"
+}
