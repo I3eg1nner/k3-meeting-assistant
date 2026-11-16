@@ -9,7 +9,7 @@ import tarfile
 
 ROOT = Path(__file__).resolve().parents[1]
 DIRECTORIES = ("backend/meeting_assistant", "backend/tests", "web", "tests", "scripts", "deploy", ".github")
-FILES = ("README.md", "SECURITY.md", ".gitignore", ".env.example", "package.json", "package-lock.json", "pyproject.toml", "tsconfig.json", "vite.k3.config.ts", "eslint.config.mjs", "docs/PROJECT_OVERVIEW_ZH.md", "docs/RELEASE_CHECKLIST.md")
+FILES = ("README.md", "SECURITY.md", "LICENSE", "NOTICE", ".gitignore", ".env.example", "package.json", "package-lock.json", "pyproject.toml", "tsconfig.json", "vite.k3.config.ts", "eslint.config.mjs", "docs/PROJECT_OVERVIEW_ZH.md", "docs/RELEASE_CHECKLIST.md")
 ALLOWED = {".py", ".sh", ".md", ".json", ".ts", ".tsx", ".css", ".html", ".mjs", ".toml", ".yml", ".yaml", ".service", ".logrotate"}
 PRIVATE_SCRIPTS = {"scripts/annotate_reference_manuscript.py", "scripts/build_readable_report.py"}
 SECRET = re.compile(r"(?:sk-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|-----BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY-----)")

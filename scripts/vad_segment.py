@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
 import wave
 from pathlib import Path
 from typing import Any
@@ -50,6 +51,8 @@ def speech_intervals(
         .with_smoothing_window(10)
         .with_min_speech_duration(int(min_speech_seconds * 1000))
     )
+    if model_dir := os.getenv("MEETING_VAD_MODEL_DIR"):
+        config.model_dir = model_dir
     engine = spacemit_vad.VadEngine(config)
     if not engine.is_initialized:
         raise RuntimeError("Silero VAD 初始化失败")

@@ -6,6 +6,8 @@
 
 > 当前状态：源码发布候选，尚未完成产品级验收。新板与 SSD 部署仍待验证；真实会议准确率、性能和全自动报告语义质量的限制见文末。发布步骤见 [发布检查清单](docs/RELEASE_CHECKLIST.md)，安全边界见 [SECURITY.md](SECURITY.md)。
 
+源码采用 [Apache-2.0](LICENSE) 许可证。模型权重、厂商运行时与第三方依赖分别遵守其原有许可；私有会议材料不随源码发布。
+
 ## 已实现能力
 
 - `LOCAL_ONLY` 与 `HYBRID_REVIEW` 两种会议模式。
@@ -75,6 +77,18 @@ ASR JSON 至少应包含：
 云端适配层使用 `.env.example` 中的 `CLOUD_*` 配置，兼容 `/chat/completions` 和 `/audio/transcriptions` 接口。整场音频/整图的自动兜底外发已关闭；`HYBRID_REVIEW` 不代表已经完成按疑难片段的自动外发工作流。云端结果只能作为候选，不得覆盖本地或用户结果。
 
 ## K3 部署
+
+模型不包含在源码仓库。可下载到已挂载的 SSD（示例 `/data`，先确认挂载和容量）：
+
+```bash
+python3 scripts/restore_models.py --root /data/meeting-assistant/models
+python3 scripts/restore_vendor_models.py --root /data/meeting-assistant/models
+```
+
+第一个脚本固定 Qwen3-4B 官方仓库版本并验证文件哈希；官方站点不可达时可显式添加
+`--endpoint https://hf-mirror.com`。第二个脚本恢复进迭时空 ASR q40、VLM、OCR、CAM++ 和 Silero VAD。
+官方提供 MD5 的文件按固定值核对，并记录本地 SHA-256；未提供上游哈希的模型只记录本地摘要，
+不宣称完成独立来源认证。下载完成不等于通过推理验收，须核对配置路径并执行模型基准。
 
 支持自定义 SSH 端口（使用 SSH agent 或交互认证，不把密码写入配置仓库）：
 

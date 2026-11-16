@@ -10,8 +10,6 @@ import urllib.request
 
 MODELS = [
     ("Qwen/Qwen3-4B-GGUF", "bc640142c66e1fdd12af0bd68f40445458f3869b", "text", {"Qwen3-4B-Q4_K_M.gguf", "README.md", "LICENSE"}),
-    ("SpacemiT/Qwen3-ASR-0.6B", "4ee977eee374515157fd9020f43aae4f157c8563", "asr/Qwen3-ASR-0.6B", None),
-    ("SpacemiT/Qwen3.5-2B", "24e6374f424485475831e3e722e1a4e95703850c", "vlm/Qwen3.5-2B", {"README.md", "configs/K3/config.json", "humanspeech.jpg", "qwen3_5_2b-text-q41.gguf", "qwen3_5_2b-vision-384-op23.f16.onnx"}),
 ]
 
 
