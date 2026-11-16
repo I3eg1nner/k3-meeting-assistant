@@ -275,7 +275,8 @@ class LlamaProcessManager:
                 stderr=subprocess.STDOUT,
                 start_new_session=True,
             )
-            deadline = time.monotonic() + 45
+            # Cold model loading on the restored K3 stack can exceed 45 s.
+            deadline = time.monotonic() + 120
             while time.monotonic() < deadline:
                 if self._process.poll() is not None:
                     self.stop()

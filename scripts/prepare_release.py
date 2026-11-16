@@ -36,7 +36,7 @@ def main():
             tar.add(path, arcname=f"k3-meeting-assistant/{path.relative_to(ROOT)}", recursive=False)
     (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     print(f"Prepared {len(paths)} source files: {archive}")
-    print("Candidate only: requires board acceptance, license selection and manual privacy review before publication.")
+    print("Candidate only: Apache-2.0 source; requires board acceptance and manual privacy review before publication.")
 
 
 if __name__ == "__main__":

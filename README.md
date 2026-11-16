@@ -90,6 +90,24 @@ python3 scripts/restore_vendor_models.py --root /data/meeting-assistant/models
 官方提供 MD5 的文件按固定值核对，并记录本地 SHA-256；未提供上游哈希的模型只记录本地摘要，
 不宣称完成独立来源认证。下载完成不等于通过推理验收，须核对配置路径并执行模型基准。
 
+已有板端原生运行时的恢复部署，可执行：
+
+```bash
+python3 scripts/adapt_campplus.py \
+  /data/meeting-assistant/models/speaker/3dspeaker_speech_campplus_sv_zh-cn_16k-common.onnx \
+  /data/meeting-assistant/models/speaker/campplus-native-compatible.onnx
+sudo python3 deploy/configure-ssd-models.py --root /data/meeting-assistant/models
+```
+
+CAM++ 适配只把输入名从 `x` 改为 `feature`，保留原文件并验证三组数值输出等价。
+配置脚本备份原配置、保留访问令牌与会议数据路径，新增 SSD 挂载依赖；检查完成后再
+`sudo systemctl daemon-reload && sudo systemctl restart meeting-assistant`。
+这些脚本不安装厂商原生运行时：`spacemit_vad`、`spacemit_vision` 和
+`vendor/onnxruntime/build/bin/extract_speaker_embedding` 仍需按厂商文档构建/安装，不能把干净系统当成已就绪。
+如果升级系统到 OpenCV 5 后旧 OCR 扩展缺少 `libopencv_dnn.so.414`，可将官方 4.14 deb
+单独解包到项目运行时目录，并通过 `configure-ssd-models.py --opencv-lib <兼容库目录>` 指定；
+不要以错误的 so 文件软链接冒充 ABI 兼容，也不要因此降级整机的 OpenCV。
+
 支持自定义 SSH 端口（使用 SSH agent 或交互认证，不把密码写入配置仓库）：
 
 ```bash
