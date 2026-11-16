@@ -5,3 +5,7 @@ Project source is licensed under Apache License 2.0.
 Separately downloaded model weights, vendor runtimes and third-party packages
 retain their respective licenses. They are not redistributed in this repository.
 Private meeting recordings, images, transcripts and reports are not included.
+An explicitly authorized demonstration PDF is provided in
+examples/synopsys-hav-2026/. Its third-party slides, photographs and other
+source materials retain their respective rights and are not relicensed under
+Apache-2.0. See the sample README for provenance and limitations.

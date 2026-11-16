@@ -28,6 +28,12 @@
 
 导出支持 DOCX / PDF。读者看到的是章节、图片和清晰的来源编号；编辑者可以回到原始音频片段或图片核对。未经确认的导出标记为草稿，正式导出需要人工审核确认。
 
+### 看一份真实样例
+
+[Synopsys HAV 技术开放日 2026：26 页图文报告（PDF）](https://github.com/I3eg1nner/k3-meeting-assistant/blob/main/examples/synopsys-hav-2026/report.pdf) · [来源与使用边界](https://github.com/I3eg1nner/k3-meeting-assistant/blob/main/examples/synopsys-hav-2026/README.md)
+
+这是经材料提供者授权公开的历史人工整理校订样例，展示详细文稿、现场图片、来源索引与待核实项的呈现方式，不代表当前模型可以无人审核地生成同等质量的报告，也不是主办方官方出版物。仅公开该 PDF，不公开录音和完整转写。
+
 ## 核心方法
 
 ### 1. 同时整理讲解与幻灯片
@@ -164,4 +170,4 @@ npx tsc --noEmit
 - [发布检查清单](docs/RELEASE_CHECKLIST.md)
 - [安全与隐私](SECURITY.md)
 
-源码采用 [Apache-2.0](LICENSE) 许可证，见 [NOTICE](NOTICE)。模型权重、厂商运行时及第三方依赖遵守各自许可。会议录音、文字稿、照片、报告、密钥和模型权重不随公开源码发布。
+源码采用 [Apache-2.0](LICENSE) 许可证，见 [NOTICE](NOTICE)。模型权重、厂商运行时及第三方依赖遵守各自许可。除上述明确授权的示例 PDF 外，会议录音、完整文字稿、原始照片、其他报告、密钥和模型权重不随公开源码发布。示例中的第三方材料不因本仓库的源码许可而重新获得 Apache-2.0 授权。
