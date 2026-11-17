@@ -20,5 +20,13 @@ jobs:
       - run: npm test
       - run: npm run lint
       - run: npx tsc --noEmit
-      - run: bash -n scripts/deploy-k3.sh deploy/activate-release.sh deploy/install-k3.sh
+      - run: bash -n install.sh scripts/deploy-k3.sh deploy/activate-release.sh deploy/install-k3.sh deploy/quickstart.sh deploy/bundle-header.sh
       - run: python scripts/prepare_release.py
+      - run: npm run build:k3
+      - run: python scripts/package_k3.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: k3-application-installer
+          path: |
+            release/k3-meeting-assistant-k3.run
+            release/k3-meeting-assistant-k3.run.sha256

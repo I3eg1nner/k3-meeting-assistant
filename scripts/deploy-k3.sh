@@ -15,6 +15,6 @@ ssh -p "$port" "$host" "mkdir -m 0755 '$candidate'"
 rsync -az \
   --exclude '__pycache__' \
   --exclude '*.pyc' \
-  backend deploy scripts pyproject.toml .env.example \
+  backend deploy scripts install.sh pyproject.toml .env.example \
   -e "ssh -p $port" "$host:$candidate/"
 ssh -p "$port" "$host" "bash '$candidate/deploy/activate-release.sh' '$candidate'"

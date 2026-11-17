@@ -137,6 +137,14 @@ npm run dev:k3
 
 ### K3 部署
 
+已有安装包时，在 K3 上执行即可安装并启动（板端不需要 Node.js）：
+
+```bash
+sudo bash k3-meeting-assistant-k3.run --yes --install-deps
+```
+
+建议先核对配套 `.sha256` 文件，再用 `bash k3-meeting-assistant-k3.run --check` 检查环境。安装保留已有令牌、模型与会议数据，失败时尝试恢复旧代码；不会自动安装厂商原生运行时、下载模型或修改磁盘。应用启动成功不等于模型就绪。安装包构建、使用与回滚边界见[部署说明](docs/OPERATIONS.md#一键应用安装包)。
+
 在开发机构建并上传应用，板端不需要 Node.js：
 
 ```bash

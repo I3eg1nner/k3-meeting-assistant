@@ -50,6 +50,44 @@ ASR JSON 至少应包含：
 
 ## K3 部署
 
+### 一键应用安装包
+
+提供自解压 `.run` 安装包，包含后端、部署工具和已编译前端。它统一完成应用检查、候选版本部署、systemd 启动及鉴权检查；不等同于完整模型环境的一键安装。
+
+开发者在开发机构建：
+
+```bash
+npm ci
+npm run build:k3
+python3 scripts/package_k3.py
+```
+
+产物是 `release/k3-meeting-assistant-k3.run` 和同名 `.run.sha256`。CI 也生成名为 `k3-application-installer` 的构建附件；不是 GitHub 源码 ZIP。构建使用源码发布白名单，不包含会议数据、模型权重或私有原生二进制。静态资源由当前开发环境构建，请勿向前端构建变量注入密钥。
+
+将两个文件下载/复制到 K3 的同一目录，执行：
+
+```bash
+sha256sum -c k3-meeting-assistant-k3.run.sha256
+# 只检查，无需 root，不修改系统
+bash k3-meeting-assistant-k3.run --check
+# 安装、启动；仅补装缺失的应用依赖
+sudo bash k3-meeting-assistant-k3.run --yes --install-deps
+```
+
+已经具备依赖的板子可省略 `--install-deps`。不传 `--yes` 时会交互确认。源码目录已构建前端时，也可直接执行 `sudo bash install.sh --yes --install-deps`。
+
+- 仅支持 Linux riscv64 + systemd，当前目标为 Bianbu K3；不是其他 RISC-V 板型的适配承诺。
+- `--install-deps` 只请求补装缺少的应用包，不主动升级已安装包，不安装 OpenCV/ORT/厂商 SDK。apt 仍可能因依赖解析调整关联包；不承诺系统级事务回滚。
+- 保留 `/etc/meeting-assistant.env`、业务数据及已有模型；旧应用目录保留用于回退，原有 `vendor/` 原生文件会沿用。更新会短暂重启服务，请先等待正在处理的会议完成。
+- 激活失败会尝试恢复旧应用代码；不是数据库迁移或系统包回滚。首次安装失败时没有旧版本可恢复，配置与诊断文件保留供排错。
+- 包内 SHA-256 防止下载损坏，不是数字签名；请从可信发布渠道获取安装包和外部校验文件。
+- 安装后访问 `http://<K3局域网IP>:8000`，令牌保存在仅 root 可读的 `/etc/meeting-assistant.env`，更新不会重置令牌。请勿向公网直接开放服务。
+- 末尾模型诊断仅报告文件/模块是否可用，绝不把网页启动或模块导入当成推理质量验收。
+
+排错：`sudo systemctl status meeting-assistant`；`sudo journalctl -u meeting-assistant -n 100 --no-pager`。不要在反馈日志中粘贴访问令牌或会议材料。
+
+### 模型与原生运行时
+
 模型不包含在源码仓库。可下载到已挂载的 SSD（示例 `/data`，先确认挂载和容量）：
 
 ```bash

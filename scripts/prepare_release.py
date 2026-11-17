@@ -16,7 +16,7 @@ SECRET = re.compile(r"(?:sk-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|-----B
 
 
 def main():
-    candidates = [ROOT / name for name in FILES]
+    candidates = [ROOT / name for name in (*FILES, 'install.sh')]
     for name in DIRECTORIES:
         candidates.extend(p for p in (ROOT / name).rglob("*") if p.is_file() and p.suffix in ALLOWED and "__pycache__" not in p.parts)
     paths = sorted(p for p in set(candidates) if str(p.relative_to(ROOT)) not in PRIVATE_SCRIPTS)
